@@ -1,0 +1,36 @@
+name: 'gitambush'
+description: 'Detect weaponized Git repos, GitSpawn (core.fsmonitor) execution traps, malicious filter drivers, and boobytrapped hooks.'
+author: 'Nithin S'
+branding:
+  icon: 'shield'
+  color: 'red'
+
+inputs:
+  path:
+    description: 'Path to repository to scan'
+    required: false
+    default: '.'
+  fail-on:
+    description: 'Exit code 1 if findings meet or exceed severity (critical, high, medium, low)'
+    required: false
+    default: 'high'
+  format:
+    description: 'Output format (terminal, json, sarif)'
+    required: false
+    default: 'terminal'
+  sarif-file:
+    description: 'Path to write SARIF output file if format is sarif'
+    required: false
+    default: 'gitambush-results.sarif'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run gitambush
+      shell: bash
+      run: |
+        if [ "${{ inputs.format }}" = "sarif" ]; then
+          node "${{ github.action_path }}/bin/gitambush.js" scan "${{ inputs.path }}" --format sarif --fail-on "${{ inputs.fail-on }}" > "${{ inputs.sarif-file }}"
+        else
+          node "${{ github.action_path }}/bin/gitambush.js" scan "${{ inputs.path }}" --format "${{ inputs.format }}" --fail-on "${{ inputs.fail-on }}"
+        fi

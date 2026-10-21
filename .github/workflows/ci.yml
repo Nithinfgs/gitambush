@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [18, 20, 22, 24]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Self-audit with gitambush
+        run: node ./bin/gitambush.js scan . --fail-on high
+
+      - name: Verify zero runtime dependencies
+        run: |
+          deps=$(node -e "const pkg = JSON.parse(require('fs').readFileSync('package.json')); console.log(Object.keys(pkg.dependencies || {}).length);")
+          if [ "$deps" -ne "0" ]; then
+            echo "Expected 0 runtime dependencies, found $deps"
+            exit 1
+          fi
+          echo "Verified: 0 runtime dependencies!"

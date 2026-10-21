@@ -1,0 +1,54 @@
+{
+  "name": "gitambush",
+  "version": "1.0.0",
+  "description": "Detect weaponized Git repos, GitSpawn (core.fsmonitor) execution traps, malicious filter drivers, and booby-trapped hooks before opening untrusted projects in your terminal or coding agent.",
+  "keywords": [
+    "git",
+    "gitspawn",
+    "security",
+    "vulnerability-scanner",
+    "fsmonitor",
+    "cve-2026",
+    "claude-code",
+    "cursor",
+    "ai-agents",
+    "supply-chain-security",
+    "rce-prevention",
+    "git-hooks",
+    "sarif",
+    "zero-dependencies"
+  ],
+  "author": "Nithin S (https://github.com/Nithinfgs)",
+  "license": "MIT",
+  "homepage": "https://github.com/Nithinfgs/gitambush#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nithinfgs/gitambush.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Nithinfgs/gitambush/issues"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./types/index.d.ts",
+  "bin": {
+    "gitambush": "./bin/gitambush.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "types",
+    "action.yml",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "node --test test/**/*.test.js",
+    "check": "node --test test/**/*.test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
