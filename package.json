@@ -46,8 +46,8 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "test": "node --test test/**/*.test.js",
-    "check": "node --test test/**/*.test.js"
+    "test": "node --test test/*.test.js",
+    "check": "node --test test/*.test.js"
   },
   "dependencies": {},
   "devDependencies": {}
